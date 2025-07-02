@@ -1,76 +1,62 @@
-Graph Analysis Project (C++)
-🧠 Project Overview
-This project is a comprehensive implementation of graph analysis in modern C++, utilizing object-oriented programming (OOP) principles and custom-built data structures. It is designed to read and process multiple graphs and compute various graph-theoretical properties that are common in computer science and algorithmic applications.
+# Graph Analysis Engine (C++ / Embedded-Oriented)
 
-Notably, the project includes a custom implementation of core data structures such as vectors and queues — without using the STL — to demonstrate a deeper understanding of memory and algorithm mechanics.
+This project is a comprehensive implementation of graph analysis algorithms in C++, developed with embedded constraints and low-level programming in mind. Originally designed as a university assignment, it was intentionally extended and engineered as a lightweight and modular simulation of how graph algorithms can be used in embedded systems, such as smart city infrastructure or sensor network control modules.
 
-Although initially developed as part of a university assignment, the project structure, algorithms, and coding approach reflect professional software engineering standards.
+## Project Purpose
 
-🔍 Features
-For each input graph, the following parameters are computed:
+Many modern embedded systems rely on structural analysis of real-world topologies — for example, modeling traffic systems, wireless sensor deployment, or route optimization in logistics. This project simulates such use cases using undirected graphs, where each node represents a device, location, or controller, and each edge represents a communication or physical link.
 
-Degree sequence
+By implementing this system without STL containers and focusing on memory-efficient, custom-built data structures, the project aims to model how embedded hardware could perform localized, algorithmic reasoning under resource constraints.
 
-Number of connected components
+## Features
 
-Bipartiteness check
+The system processes `k` graphs per run, and for each graph computes:
 
-Vertex eccentricity (within components)
+- Degree sequence of all vertices
+- Number of connected components
+- Bipartiteness test
+- Vertex eccentricity (per component)
+- Planarity check
+- Vertex coloring using:
+  - Greedy strategy (by vertex number)
+  - Largest First (LF)
+  - Smallest Last First (SLF)
+- Count of distinct C4 subgraphs (4-node cycles)
+- Number of edges in the graph complement
 
-Graph planarity
+If a specific feature is not implemented, the output uses `'?'` as a placeholder (per task specification). Only features 1 and 2 are mandatory; this implementation includes **all** features.
 
-Vertex coloring using:
+## Technical Highlights
 
-Greedy coloring (by vertex ID order)
+- Language: C++
+- Programming Paradigm: Object-Oriented Design
+- STL: **Not used** — all containers implemented manually for memory transparency
+  - `MyVector` — dynamic array implementation
+  - `MyQueue` — queue used in BFS traversals
+- Algorithms: BFS, DFS, coloring heuristics, planarity test, eccentricity calculation
+- Input: CLI or file stream
+- Output: Printed responses per graph dataset
 
-LF method (Largest First, tiebreaker by vertex ID)
+## Example Input
+2 4 2 2 3 2 1 4 1 2 1 1 3 2 2 3 1 1 0
 
-SLF method (Smallest Last First, tiebreaker by degree and then ID)
 
-Count of distinct C4 subgraphs (cycles of length 4)
+Each graph starts with a number of vertices `n`, followed by `n` lines of adjacency info. See `sample_input.txt` for more examples.
 
-Number of edges in the graph complement
+## Use Case Context
 
-If any optional parameter is not implemented, the program outputs ? as specified.
+Although this program was built and run in a standard environment, its structure is meant to reflect **embedded-inspired system design**. In a real use case such as smart traffic control:
 
-🧰 Technical Details
-Language: C++
+- Graph planarity helps layout intersection maps efficiently
+- Vertex coloring avoids interference among wireless units
+- Component detection identifies isolated subnetworks
+- C4 detection flags circular congestion structures
+- Eccentricity analysis supports better signal propagation paths
 
-Programming Paradigm: Object-Oriented Programming (OOP)
+This approach shows how algorithmic thinking can power useful decisions in real-time embedded logic controllers, even without access to high-level libraries or dynamic memory abstraction layers.
 
-Main Class: Graph — encapsulates all logic and graph data
+## Compilation & Run
 
-Custom Data Structures:
-
-MyVector — dynamic array replacement
-
-MyQueue — queue used in BFS and other traversal algorithms
-
-Algorithms Used:
-
-Breadth-First Search (BFS) and Depth-First Search (DFS)
-
-Graph coloring (Greedy, LF, SLF)
-
-Bipartiteness check using BFS
-
-Eccentricity calculation using BFS
-
-Detection of C4 cycles
-
-Edge counting in graph complement
-
-Input/Output: Processes multiple graphs as per custom input format and outputs required results in strict order.
-
-🧑‍💻 About the Developer
-I'm a student with a solid foundation in algorithms, data structures, and software engineering practices. This project showcases my ability to:
-
-Write clean and modular code using OOP in C++
-
-Build custom implementations of core data structures
-
-Implement non-trivial graph algorithms from scratch
-
-Understand both theoretical concepts and practical application
-
-I intentionally avoided using STL to reinforce my grasp of memory management, dynamic arrays, and queues. The codebase is structured, scalable, and reflects a problem-solving mindset.
+```bash
+g++ -std=c++17 main.cpp -o graph_engine
+./graph_engine < input.txt > output.txt
